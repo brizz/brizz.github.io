@@ -52,6 +52,86 @@
   <header>
     
       <div class="icon"></div>
+      <time datetime="2014-04-11T02:17:29.000Z"><a href="/2014/04/11/sublime-tfs配置/">4月 11 2014</a></time>
+    
+    
+  
+    <h1 class="title"><a href="/2014/04/11/sublime-tfs配置/">Sublime Text3 TFS 安装与配置</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <ol>
+<li>首先在Sublime Text中安装好<a href="https://sublime.wbond.net/packages/Sublime%20TFS" target="_blank">Sublime TFS插件</a></li>
+<li>如果没有安装TFS Tools的话，选择安装TFS相应版本的<a href="http://visualstudiogallery.msdn.microsoft.com/f017b10c-02b4-4d6d-9845-58a06545627f" target="_blank">TFS Power Tools</a> </li>
+<li><p>在Sublime TFS 插件设置中设置好<code>tf_path</code>与<code>tftp_path</code>,64 Win系统配置如下,可根据自己系统配置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>{
+    "<span class="attribute">tf_path</span>": <span class="value"><span class="string">"C:/Program Files (x86)/Microsoft Visual Studio 12.0/Common7/IDE/TF.exe"</span></span>,
+    "<span class="attribute">tfpt_path</span>": <span class="value"><span class="string">"C:/Program Files (x86)/Microsoft Team Foundation Server 2013 Power Tools/TFPT.exe"</span></span>,
+    "<span class="attribute">auto_checkout_enabled</span>" : <span class="value"><span class="literal">true</span>
+</span>}
+</pre></td></tr></table></figure>
+</li>
+<li><p>基本上TFS常用功能都可以使用了,但是Get Latest Version 会报错说没有权限,此时的解决方法如下,打开<code>Sublime TFS</code> 插件的源码<code>sublime_tfs.py</code>文件,修改其中的<code>get_latest</code>与<code>dir_get_latest</code>方法,在<code>get</code>后加入<code>/login:user,password</code>登陆用户参数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre>//修改前
+
+<span class="function"><span class="keyword">def</span> <span class="title">get_latest</span><span class="params">(self, path)</span>:</span>
+    <span class="keyword">return</span> self.run_command([<span class="string">"get"</span>], path)
+
+<span class="function"><span class="keyword">def</span> <span class="title">dir_get_latest</span><span class="params">(self, path)</span>:</span>
+    <span class="keyword">return</span> self.run_command([<span class="string">"get"</span>], path)
+
+//修改后
+
+<span class="function"><span class="keyword">def</span> <span class="title">get_latest</span><span class="params">(self, path)</span>:</span>
+    <span class="keyword">return</span> self.run_command([<span class="string">"get"</span>,<span class="string">"/login:home\\bestm,password1"</span>], path)
+
+<span class="function"><span class="keyword">def</span> <span class="title">dir_get_latest</span><span class="params">(self, path)</span>:</span>
+    <span class="keyword">return</span> self.run_command([<span class="string">"get"</span>, <span class="string">"/recursive"</span>,<span class="string">"/login:home\\bestm,password1"</span>], path)
+</pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
       <time datetime="2014-01-25T09:05:05.000Z"><a href="/2014/01/25/hello-world/">1月 25 2014</a></time>
     
     
@@ -94,19 +174,53 @@
     
       
       
-    
-      
-      
-    
-      
-      
+
+<div class="widget tag first">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/blog/">blog</a><small>1</small></li>
+  
+  </ul>
+</div>
+
     
       
       
 
-<div class="widget recent-posts first">
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/博客/">博客</a><small>1</small></li>
+  
+    <li><a href="/tags/文章/">文章</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+    
+      
+      
+
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/博客/" style="font-size: NaNpx;">博客</a><a href="/tags/文章/" style="font-size: NaNpx;">文章</a>
+  </div>
+</div>
+
+    
+      
+      
+
+<div class="widget recent-posts first newline">
   <h3 class="title">最近的文章</h3>
   <ul class="entry">
+    
+      <li>
+        <a href="/2014/04/11/sublime-tfs配置/">Sublime Text3 TFS 安装与配置</a>
+      </li>
     
       <li>
         <a href="/2014/01/25/hello-world/">Hello World</a>
